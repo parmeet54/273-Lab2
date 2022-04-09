@@ -1,110 +1,72 @@
-const mysql = require('mysql')
-const db = require('../../config/db.config');
+const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
 
+const Schema = mongoose.Schema;
 
-// const pool = mysql.createPool({
-//     connectionLimit : 500,
-//     user:'admin',
-//     host:'db-273-lab1.cnhf2ck6mcsk.us-west-1.rds.amazonaws.com',
-//     password:'273lab1db',
-//     database:'lab1'
-// })
+// User Schema
+const UserSchema = new Schema ({
+    username:{
+        type: String,
+        required: true,
+        unique: true
+    },
+    email:{
+        type: String,
+        required: true,
+        unique: true
+    },
+    name:{
+        type: String,
+        required: true,
+    },
+    password:{
+        type: String,
+        required: true,
+    },
+    about:{
+        type: String,
+    },
+    address:{
+        type: String,
+    },
+    city:{
+        type: String,
+    },
+    country:{
+        type: String,
+    },
+    dob:{
+        type: String,
+    },
+    phone_no:{
+        type: String,
+    },
+    image:{
+        type: String,
+    }
 
-// Encryption
-const bcrypt = require('bcrypt');
-const salt = 10;
+});
 
-var User = function(user){
-    this.username = user.username;
-    this.email = user.email;
-    this.name = user.name;
-    this.password = user.password;
-    this.about = user.about;
-    this.city = user.city;
-    this.dob = user.dob;
-    this.address = user.address;
-    this.country = user.country;
-    this.phone_no = user.phone_no;
-    this.image = user.image;
+// Hash the password
+UserSchema.pre(
+    'save',
+    async function(next){
+        const user = this;
+        const hash= await bcrypt.hash(this.password,10);
+
+        this.password = hash;
+        next();
+    }
+)
+
+// Validate the user login
+UserSchema.methods.isValidPassword = async function(password){
+    const user = this;
+    const compare = await bcrypt.compare(password,user.password);
+
+    return compare;
 }
 
+const UserModel = mongoose.model('user', UserSchema);
 
-User.getAllUsers = (result) =>{
-    
-    // pool.query('SELECT * FROM user WHERE username = "admin" ', (err,res) =>{
-    //     if(err){
-    //         console.log("Error while getting users: ", err);
-    //         result(null, err);
-    //     }
-    //     else{
-    //         result(null, res);
-    //     }
-    // })
-    
-    db.query('SELECT * FROM user', (err,res) =>{
-        if(err){
-            console.log("Error while getting users: ", err);
-            result(null, err);
-        }
-        else{
-            result(null, res);
-        }
-    })
-}
-
-// Create user = Sign Up
-User.createUser = async (userReqData, result) => {
-
-    userReqData.password = await bcrypt.hash(userReqData.password, salt);
-    db.query('INSERT INTO user SET ?', userReqData, (err, res) => {
-        if(err){
-            console.log(err);
-            result(null, {status:false, message:"user exists"},err);
-        }
-        else{
-            result(null, {status: true, message:'User Created'});
-        }
-    })
-}
-
-
-// Get User by username
-User.getUserByUsername = (username, result) => {
-
-    db.query('SELECT * FROM user WHERE username = ?', username , (err,res) => {
-        if(err){
-            console.log("Error while fetching user data", err);
-            result(null, err);
-        }
-        else{
-            console.log("User Fetched");
-            result(null , res);
-        }
-    })
-}
-
-
-// Update Profile
-User.updateProfile = async(username, userReqData, result) => {
-
-    db.query('UPDATE user SET email=?, name=?, about=?, city=?, dob=?, address=?, country=?, phone_no=?, image=? WHERE username=?' , 
-    [userReqData.email, userReqData.name, userReqData.about, userReqData.city, userReqData.dob, userReqData.address, userReqData.country, userReqData.phone_no, userReqData.image, username], 
-    (err, res) => {
-        if(err){
-            console.log(err);
-            result(null ,err);
-        }
-        else{
-            console.log("Profile updated");
-            console.log(res);
-            result(null , {message: "User Updated" , status: true});
-        }
-    })
-}
-
-
-
-// UPDATE IMAGE
-
-
-module.exports = User;
+module.exports = UserModel;
