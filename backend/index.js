@@ -41,15 +41,16 @@ app.use(function(req, res, next) {
   });
 
 
-//Importing routes
+// API Map Routing
 //const userRoutes = require('./src/routes/user.route');
 //const shopRoutes = require('./src/routes/shop.route');
 //const itemRoutes = require('./src/routes/item.route');
 //const cartRoutes = require('./src/routes/cart.route');
 //const orderRoutes = require('./src/routes/order.route');
 
-// For Signup and Login
+// Auth Routes
 const authRoutes = require('./src/routes/auth.route')
+app.use('/api/v1/auth/', authRoutes);
 
 
 // Getting routes
@@ -83,8 +84,6 @@ const authRoutes = require('./src/routes/auth.route')
 //     }
 // });
 
-// Auth Routess
-app.use('/api/v1/auth/', authRoutes);
 
 
 // Server Port
@@ -93,7 +92,7 @@ const port = process.env.PORT || 3001;
 // Listen to port
 // connect to mongodb cluster, then start server
 mongoose
-  .connect('mongodb+srv://parmeet:5Z1emt6qRzhFkdHI@cluster-273lab.aik5z.mongodb.net/273Lab?retryWrites=true&w=majority',  { useNewUrlParser: true })
+  .connect(process.env.MONGO_CONNECTION_URI,  { useNewUrlParser: true })
   .then(() => {
     app.listen(port, () => {
       console.log("Backend is running at port:", port);

@@ -32,7 +32,7 @@ router.post(
 
                         res.status(400).send("Wrong username/password combination");
                         return next("\nWrong username/password combination");
-                        return next(error);
+                        //return next(error);
                     }
 
                     req.login(
