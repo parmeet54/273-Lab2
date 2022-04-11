@@ -20,7 +20,8 @@ const ShopSchema = new Schema ({
         required: true
     },
     total_sales:{
-        type: Number
+        type: Number,
+        default:0
     },
     image:{
         type: String,

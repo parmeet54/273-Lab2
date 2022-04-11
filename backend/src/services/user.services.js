@@ -28,20 +28,23 @@ exports.getUserByUsername = async (username, result) => {
 }
 
 
-// Get User By Username
+// Update User by Username
 exports.updateProfile = async (username, userReqData, result) => {
     try{
         const updatedUser = await UserModel.findOneAndUpdate({username}, 
-            {$set:{
-                name:userReqData.name,
-                about:userReqData.about,
-                city:userReqData.city,
-                dob:userReqData.dob,
-                address:userReqData.address,
-                country:userReqData.country,
-                phone_no:userReqData.phone_no,
-                image:userReqData.image
-            }},{returnOriginal:false});
+            {
+                $set:{
+                    name:userReqData.name,
+                    about:userReqData.about,
+                    city:userReqData.city,
+                    dob:userReqData.dob,
+                    address:userReqData.address,
+                    country:userReqData.country,
+                    phone_no:userReqData.phone_no,
+                    image:userReqData.image
+                }
+            },
+            {returnOriginal:false});
 
         result(null, updatedUser);
     }

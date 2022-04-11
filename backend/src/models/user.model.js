@@ -45,7 +45,6 @@ const UserSchema = new Schema ({
         type: String,
         default:"/default.jpeg"
     }
-
 });
 
 // Hash the password
