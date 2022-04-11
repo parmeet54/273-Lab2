@@ -19,6 +19,12 @@ passport.use(
                 const email = req.body.email;
                 const name = req.body.name;
                 const image = req.body.image;
+                // const about = req.body.about;
+                // const city = req.body.city;
+                // const address = req.body.address;
+                // const country = req.body.country;
+                // const dob = req.body.dob;
+                //const phone_no = req.body.phone_no;
 
                 const user = await UserModel.create({username, password, email, name, image});
 

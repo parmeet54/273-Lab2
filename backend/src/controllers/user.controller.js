@@ -1,52 +1,31 @@
-const userModel = require('../models/user.model');
+const UserService = require('../services/user.services')
 
 // Get All Users
 exports.getAllUsers = (req,res) => {
     console.log("\nGET ALL USERS");
 
-    userModel.getAllUsers((err, result) => {
+    UserService.getAllUsers((err, result) => {
         if(err){
             res.send(err);
         }
         else{
-            res.send(result);
+            res.json(result);
             console.log(result);
         }
     })
 }
 
 
-// Create a user = Sign Up
-exports.createUser = (req,res) => {
-    console.log("\nCREATE USER");
-
-    const userData = new userModel(req.body);
-    userModel.createUser(userData, (err, result) => {
-        if(err){
-            console.log(err);
-            res.send(err);
-        }
-        if(result.status == true){
-            console.log("Inside USER CONTROLLER: User Created");
-            res.send(result);
-        }
-        else res.send("User Already exists");
-        console.log(userData);
-    })
-}
-
-
-
 // Get User by username
 exports.getUserByUsername = (req, res) => {
-    console.log("Inside Controller: Get Profile");
+    console.log("Inside Controller: Get Profile: ", req.params.username);
 
-    userModel.getUserByUsername(req.params.username ,(err, result) => {
+    UserService.getUserByUsername(req.params.username ,(err, result) => {
         if(err){
             console.log(err);
             res.send(err);
         }
-        if(result.length == 0)
+        if(result == null)
         {
             console.log("No Such User exists");
             res.send("No such user exists");
@@ -61,16 +40,16 @@ exports.getUserByUsername = (req, res) => {
 
 // Update Profile
 exports.updateProfile = (req, res) => {
-    console.log("Inside User Controller: Update Profile");
+    console.log("Inside User Controller: Update Profile: ", req.params.username);
 
-    const userReqData = new userModel(req.body);
-    userModel.updateProfile(req.params.username, userReqData , (err, result) => {
+    UserService.updateProfile(req.params.username, req.body , (err, result) => {
         if(err){
             console.log(err);
             res.send(err);
         }
         else{
             console.log(result);
+            console.log("\nUser Updated")
             res.send(result)
         }
     })

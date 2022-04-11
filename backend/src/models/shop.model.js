@@ -23,7 +23,8 @@ const ShopSchema = new Schema ({
         type: Number
     },
     image:{
-        type: String
+        type: String,
+        default:"/default-shop.jpeg"
     }
 });
 
