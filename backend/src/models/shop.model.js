@@ -1,10 +1,9 @@
-//const db = require('../../config/db.config');
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema;
 
 
-// Item Schema
+// Shop Schema
 const ShopSchema = new Schema ({
     shop_ID:{
         type: Number,
