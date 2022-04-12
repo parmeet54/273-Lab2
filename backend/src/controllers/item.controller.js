@@ -65,12 +65,12 @@ exports.getItemByShopID = (req, res) => {
     ItemService.getItemByShopID(req.params.shop ,(err, result) => {
         if(err){
             console.log(err);
-            res.send(err);
+            res.status(200).send(err);
         }
-        if(result == null)
+        if(result.length == 0)
         {
-            console.log("No Such Item exists");
-            res.send("");
+            console.log("No Item exists in this Shop");
+            res.status(404).send("No Item exists in this Shop");
         }
         else{
             console.log(result);
@@ -89,10 +89,10 @@ exports.getItemByName = (req, res) => {
             console.log(err);
             res.send(err);
         }
-        if(result == null)
+        if(result.length == 0)
         {
             console.log("No Such Item exists");
-            res.send("");
+            res.send("No such item Exists");
         }
         else{
             console.log(result);

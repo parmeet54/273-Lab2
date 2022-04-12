@@ -19,7 +19,7 @@ app.use(cors());
 
 //use express session to maintain session data
 app.use(session({
-    secret              : 'cmpe273_lab1', 
+    secret              : 'cmpe273_lab', 
     resave              : false, // Forces the session to be saved back to the session store, even if the session was never modified during the request
     saveUninitialized   : false, // Force to save uninitialized session to db. A session is uninitialized when it is new but not modified.
     duration            : 60 * 60 * 1000,    // Overall duration of Session : 30 minutes : 1800 seconds
@@ -46,7 +46,7 @@ const userRoutes = require('./src/routes/user.route');
 const shopRoutes = require('./src/routes/shop.route');
 const itemRoutes = require('./src/routes/item.route');
 //const cartRoutes = require('./src/routes/cart.route');
-//const orderRoutes = require('./src/routes/order.route');
+const orderRoutes = require('./src/routes/order.route');
 
 // Auth Routes
 const authRoutes = require('./src/routes/auth.route')
@@ -68,7 +68,7 @@ app.use("/api/v1/items", itemRoutes);
 //app.use("/api/v1/cart", cartRoutes);
 
 // Order Routes
-//app.use("/api/v1/orders", orderRoutes);
+app.use("/api/v1/orders", orderRoutes);
 
 
 // // User logout function
