@@ -1,4 +1,4 @@
-const ItemService = require('..')
+const ItemService = require('../services/item.service')
 
 // Get All Items
 exports.getAllItems = (req,res) => {
@@ -20,7 +20,7 @@ exports.getAllItems = (req,res) => {
 exports.createItem = (req,res) => {
     console.log("\nCREATE ITEM");
 
-    const itemData = new itemModel(req.body);
+    const itemData = req.body;
     ItemService.createItem(itemData, (err, result) => {
         if(err){
             console.log(err);
@@ -108,7 +108,7 @@ exports.getItemByName = (req, res) => {
 exports.updateItem = (req, res) => {
     console.log("Inside Item Controller: Update Item");
 
-    const itemData = new itemModel(req.body);
+    const itemData = req.body;
     ItemService.updateItem(req.params.item_ID, itemData , (err, result) => {
         if(err){
             console.log(err);
@@ -126,7 +126,7 @@ exports.updateItem = (req, res) => {
 // Update Item Quantity
 exports.updateItemQuantity = (req, res) => {
 
-    const itemData= new itemModel(req.body);
+    const itemData = req.body;
     ItemService.updateItemQuantity(req.params.item_ID, itemData, (err,result) => {
         if(err)
         res.send(err);
@@ -141,7 +141,7 @@ exports.updateItemQuantity = (req, res) => {
 // Favorite/Unfav Item
 exports.updateItemFav = (req, res) => {
 
-    const itemData= new itemModel(req.body);
+    const itemData = req.body;
     ItemService.updateItemFav(req.params.item_ID, itemData, (err,result) => {
         if(err)
         res.send(err);
@@ -155,14 +155,11 @@ exports.updateItemFav = (req, res) => {
 
 // delete Item by ID
 exports.deleteItem = (req, res) => {
-    ItemService.deleteItem(req.params.item_ID, (err, user) =>{
+    ItemService.deleteItem(req.params.item_ID, (err, result) =>{
         if(err)
         res.send(err);
 
+        console.log(result)
         res.json({success: true, message: "Item Deleted"});
     });
 }
-
-
-
-

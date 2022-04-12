@@ -15,7 +15,7 @@ exports.getAllItems = async (result) => {
 // Create Item
 exports.createItem = async (itemReqData, result) => {
 
-    const item_ID = itemReqData.shop_ID;
+    const item_ID = itemReqData.item_ID;
     const name = itemReqData.name;
     const shop = itemReqData.shop;
     const shopname = itemReqData.shopname;
@@ -55,7 +55,7 @@ exports.getItemByID = async (item_ID, result) => {
 // Get Item By Shop
 exports.getItemByShopID = async (shop, result) => {
     try{
-        const item = await ItemModel.findOne({shop:shop});
+        const item = await ItemModel.find({shop:shop});
 
         result(null, item);
 
@@ -69,9 +69,10 @@ exports.getItemByShopID = async (shop, result) => {
 // Get Item By Name (Search)
 exports.getItemByName = async (name, result) => {
     try{
-        const item = await ItemModel.findOne({name:name});
+        const items = await ItemModel.find({'name': {'$regex': name, '$options': 'i'}});
 
-        result(null, item);
+        console.log(items);
+        result(null, items);
 
     }
     catch(err){
@@ -144,7 +145,7 @@ exports.updateItemFav = async (item_ID, itemReqData, result) => {
 
 
 // Delete Item
-exports.updateItemFav = async (item_ID, result) => {
+exports.deleteItem = async (item_ID, result) => {
     try{
         await ItemModel.deleteOne({item_ID});
          
