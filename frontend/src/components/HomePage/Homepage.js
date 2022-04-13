@@ -23,7 +23,7 @@ const Homepage = () => {
             let response = axios.get("http://localhost:3001/api/v1/items/")
             response = await response;
 
-            setItems(response.data.filter(item =>item.shop != shop.data[0].shop_ID))
+            setItems(response.data.filter(item =>item.shop != shop.data.shop_ID))
         }
         getItems();
     },[setItems]);

@@ -55,7 +55,7 @@ function Item(props) {
     }
 
     const onNavigateItemPage = () => {
-        navigate("/item/" + props.item.item_ID);
+        navigate("/item/" + props.item.item_ID , {state:{item_ID:props.item.item_ID}});
     }
 
     const handleItemPopup = () => {

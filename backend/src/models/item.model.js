@@ -34,8 +34,8 @@ const ItemSchema = new Schema ({
         required: true
     },
     fav:{
-        type: Number,
-        default:0
+        type: String,
+        default:"0"
     },
     shopname:{
         type: String

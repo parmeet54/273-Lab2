@@ -1,7 +1,7 @@
 import React , {useEffect, useState} from 'react';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { useParams } from 'react-router';
 import { CContainer, CRow, CCol, CButton } from '@coreui/react';
 
@@ -11,7 +11,8 @@ const ItemPage = (props) => {
     const[fav,setFav] = useState(false);
     const[shopName, setShopName] = useState("");
     const[sales, setSales]= useState(0);
-    const {id} = useParams();
+    const location = useLocation();
+    //const {id} = useParams();
     const navigate = useNavigate();
     let[counter, setCounter] = useState(1);
 
@@ -20,11 +21,18 @@ const ItemPage = (props) => {
 
         async function getItem(){
  
-            let response = axios.get("http://localhost:3001/api/v1/items/"+ id);
+            console.log(location.state.item_ID);
+            let response = axios.get("http://localhost:3001/api/v1/items/"+ location.state.item_ID);
             response = await response;
 
-            setItem(response.data[0]);
-            console.log(response.data[0])
+            setItem(response.data);
+            console.log(response.data)
+
+            // let res2 = axios.get("http://localhost:3001/api/v1/shops/"+ item.shop);
+            // res2 = await res2;
+
+            // setShopName(res2.data.shopname);
+            // setSales(res2.data.total_sales)
         }
 
         getItem();
@@ -36,9 +44,8 @@ const ItemPage = (props) => {
 
         axios.get("http://localhost:3001/api/v1/shops/"+ item.shop)
             .then(response => {
-                setShopName(response.data[0].name);
-                setSales(response.data[0].total_sales)
-                console.log(response.data[0].name)
+                setShopName(response.data.name);
+                setSales(response.data.total_sales)
             });
 
         if(item.fav === "1"){
@@ -80,7 +87,7 @@ const ItemPage = (props) => {
     }
 
     const onNavigateShopPage = () => {
-        navigate("/shop/" + item.shop);
+        navigate("/shop/" + item.shop , {state:{shop_ID:item.shop}});
     }
 
     const handlePlus = () => {
@@ -97,7 +104,7 @@ const ItemPage = (props) => {
 
 
         const cartData = {
-            cart_item_ID:id,
+            cart_item_ID:item.item_ID,
             image:item.image,
             name:item.name,
             shop:item.shopname,

@@ -39,7 +39,7 @@ exports.createShop = (req,res) => {
 
 // Get SHOP by SHOP_ID
 exports.getShopByID = (req, res) => {
-    console.log("\nInside SHOP Controller: Get SHOP By USER");
+    console.log("\nInside SHOP Controller: Get SHOP By ID");
 
     ShopService.getShopByID(req.params.shop_ID ,(err, result) => {
         if(err){

@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { Component } from "react";
+import { CFormInput, CFormLabel,CFormCheck, CButton } from "@coreui/react";
 
 export default class ItemEditPopup extends Component {
 
@@ -53,16 +54,15 @@ export default class ItemEditPopup extends Component {
     this.setState({
       image:file.secure_url
     })
-    //setImage(file.secure_url)
 
     console.log(file.secure_url)
   }
 
-  handleImageChange = (e) => {
-    this.setState({
-        image: e.target.value
-    });
-  }
+  // handleImageChange = (e) => {
+  //   this.setState({
+  //       image: e.target.value
+  //   });
+  // }
 
   handleCategoryChange = (e) => {
     this.setState({
@@ -132,6 +132,48 @@ export default class ItemEditPopup extends Component {
           </span>
           <form onSubmit={this.handleSubmit}>
             <h3>Edit Item!</h3>
+            <h3>Edit the information for the Item</h3>
+            <CFormLabel>
+              Name:
+              <CFormInput value={this.state.name} onChange={this.handleNameChange} type="text" name="name" placeholder="Item Name"/>
+            </CFormLabel>
+            <br />
+            <CFormLabel>
+              Image:
+              <CFormInput onChange={this.uploadImage} type="file" name="image" placeholder="Item Image"/>
+            </CFormLabel>
+            <br />
+            <CFormLabel>
+              Category:  
+              <CFormCheck onClick={this.handleCategoryChange} inline type="radio" name="inlineRadioOptions" id="inlineCheckbox1" value="Clothing" label="Clothing"/>
+              <CFormCheck onClick={this.handleCategoryChange} inline type="radio" name="inlineRadioOptions" id="inlineCheckbox2" value="Jewelry" label="Jewelry"/>
+              <CFormCheck onClick={this.handleCategoryChange} inline type="radio" name="inlineRadioOptions" id="inlineCheckbox1" value="option3" label="Entertainment"/>
+              <CFormCheck onClick={this.handleCategoryChange} inline type="radio" name="inlineRadioOptions" id="inlineCheckbox2" value="Home Decor" label="Home Decor"/>
+              <CFormCheck onClick={this.handleCategoryChange} inline type="radio" name="inlineRadioOptions" id="inlineCheckbox1" value="Art" label="Art"/>
+
+              <CFormInput value={this.state.category} onChange={this.handleCategoryChange} type="text" name="category" placeholder="Create your own category"/>
+            </CFormLabel>
+            <br />
+            <CFormLabel>
+              Description:
+              <CFormInput value={this.state.description} onChange={this.handleDescriptionChange} className='item-description-input' type="text" name="description" placeholder="Enter Description "/>
+            </CFormLabel>
+            <br />
+            <CFormLabel>
+              Price:
+              <CFormInput value={this.state.price} onChange={this.handlePriceChange} type="text" name="price" placeholder="Enter Price"/>
+            </CFormLabel>
+            <br />
+            <CFormLabel>
+              Quantity:
+              <CFormInput value={this.state.quantity} onChange={this.handleQuantityChange} type="text" name="quantity" placeholder="Total Quantity"/>
+            </CFormLabel>
+            <br />
+            <br />
+            <CButton type="submit">Edit Item</CButton>
+          </form>
+          {/* <form onSubmit={this.handleSubmit}>
+            <h3>Edit Item!</h3>
             <h3>Edit the information for the Selected Item</h3>
             <label>
               Name:
@@ -165,7 +207,7 @@ export default class ItemEditPopup extends Component {
             <br />
             <br />
             <input type="submit" />
-          </form>
+          </form> */}
         </div>
       </div>
     );

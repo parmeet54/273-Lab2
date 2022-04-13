@@ -60,7 +60,7 @@ class Signup extends Component {
             image:"/default.jpeg"
         }
         
-        axios.post("http://localhost:3001/api/v1/users", data)
+        axios.post("http://localhost:3001/api/v1/auth/signup", data)
             .then(response => {
                 console.log("Status code" , response.status);
 

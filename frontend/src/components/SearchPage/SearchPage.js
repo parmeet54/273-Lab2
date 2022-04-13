@@ -8,14 +8,16 @@ const SearchPage = () => {
 
     const [items,setItems] = useState([]);
     const {query} = useParams();
-
+    //const query = localStorage.getItem("search")
+    
     useEffect( () => {
 
         async function getItem(){
             axios.get("http://localhost:3001/api/v1/items/searchitem/"+query)
             .then(response => {
-                if(response){
+                if(response.status == 200){
                     setItems(response.data);
+                    
                     console.log("Items for query: ", query)
                 }
                 else{

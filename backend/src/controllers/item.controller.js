@@ -92,11 +92,11 @@ exports.getItemByName = (req, res) => {
         if(result.length == 0)
         {
             console.log("No Such Item exists");
-            res.send("No such item Exists");
+            res.status(404).send("No such item Exists");
         }
         else{
             console.log(result);
-            res.send(result);
+            res.status(200).send(result);
         }
     })
 }

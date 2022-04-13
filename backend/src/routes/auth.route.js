@@ -42,10 +42,12 @@ router.post(
                         async(error) => {
                             if(error) return next(error);
 
-                            const body = {_id:user._id, username:user.username};
-                            const token = jwt.sign({user:body}, 'TOP_SECRET' , {
+                            const token = jwt.sign({_id:user._id, username:user.username},
+                            'TOP_SECRET',
+                            {
                                 expiresIn: 1008000
-                            });
+                            }
+                            );
 
                             // return res.json({
                             //     token:token,

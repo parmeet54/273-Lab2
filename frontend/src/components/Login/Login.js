@@ -3,6 +3,7 @@ import axios from 'axios';
 import {Navigate} from 'react-router';
 import { Link } from 'react-router-dom';
 import { CForm, CFormLabel, CFormInput, CCol, CButton, CRow, CContainer, CTabContent } from '@coreui/react';
+import jwt_decode from 'jwt-decode';
 
 class Login extends Component {
 
@@ -12,7 +13,8 @@ class Login extends Component {
             username: "",
             password: "",
             auth:false,
-            message: ""
+            message: "",
+            token:"" 
         }
 
         this.usernameChangeHandler = this.usernameChangeHandler.bind(this);
@@ -37,12 +39,26 @@ class Login extends Component {
             password: this.state.password,
         }
         
-        axios.post("http://localhost:3001/api/v1/login", data)
+        axios.post("http://localhost:3001/api/v1/auth/login", data)
             .then(response => {
                 console.log("Status code" , response.status);
-
                 if(response.status === 200){
-                    sessionStorage.setItem("token", data.username);
+
+                    //sessionStorage.setItem("token", data.username);
+
+                    const resToken = response.data.token; 
+                    this.setState({
+                        token: resToken
+                    })
+
+                    const decoded = jwt_decode(resToken.split('.')[1], { header: true });
+
+                    console.log(decoded);
+                    console.log("Login Successful:",decoded.username)
+
+                    sessionStorage.setItem("user_id", decoded._id);
+                    sessionStorage.setItem("token", decoded.username);
+
 
                     this.setState({
                         auth: true
@@ -51,7 +67,7 @@ class Login extends Component {
                     axios.get("http://localhost:3001/api/v1/shops/usershop/"+data.username)
                     .then(response => {
                     if(response){
-                        sessionStorage.setItem("shop",response.data[0].shop_ID);
+                        sessionStorage.setItem("shop",response.data.shop_ID);
                     }
             })  
                 }

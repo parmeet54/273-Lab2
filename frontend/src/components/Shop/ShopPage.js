@@ -6,6 +6,7 @@ import ItemList from '../Item/ItemList';
 import { useParams } from 'react-router';
 import ItemPopup from './ItemPopup';
 import { CContainer,CCol,CRow, CButton } from '@coreui/react';
+import { useLocation } from 'react-router';
 
 const ShopPage = (props) => {
     const[name, setName] = useState("");
@@ -17,7 +18,9 @@ const ShopPage = (props) => {
     const[valid, setValid] = useState(false);
     const[seen, setSeen] = useState(false);
     const[userShop,setUserShop] = useState(false);
-    const {id} = useParams();
+    const [shop,setShop] = useState("");
+    //const {id} = useParams();
+    const location = useLocation();
 
     // To handle the image input
     const hiddenFileInput = React.useRef(null);
@@ -25,21 +28,30 @@ const ShopPage = (props) => {
     useEffect(() => {
 
         async function getResponse(){
-
+            let response = ""
             //let response = axios.get("http://localhost:3001/api/v1/shops/usershop/" + sessionStorage.getItem("token"));
-            let response = axios.get("http://localhost:3001/api/v1/shops/" + id)
-            response = await response;
-            setShopID(response.data[0].shop_ID);
-            setImage(response.data[0].image);
-            setName(response.data[0].name);
-            setUsername(response.data[0].username);
-            setTotalSales(response.data[0].total_sales);
-
-            if(response.data[0].username === sessionStorage.getItem("token")){
+            if(location.state == null){
+                response = axios.get("http://localhost:3001/api/v1/shops/" + sessionStorage.getItem("shop"))
                 setUserShop(true);
+                setShop(sessionStorage.getItem("shop"));
             }
+            else{
+                response = axios.get("http://localhost:3001/api/v1/shops/" + location.state.shop_ID)
+                setShop(location.state.shop_ID);
+                //setUserShop(true);
+            }
+            response = await response;
+            setShopID(response.data.shop_ID);
+            setImage(response.data.image);
+            setName(response.data.name);
+            setUsername(response.data.username);
+            setTotalSales(response.data.total_sales);
 
-            console.log("Shop ID: " + id)
+            // if(response.data.username === sessionStorage.getItem("token")){
+            //     setUserShop(true);
+            // }
+
+            console.log("Shop ID: " + location.state.shop_ID)
         }
 
         getResponse();
@@ -49,14 +61,22 @@ const ShopPage = (props) => {
     useEffect(() => {
         async function getItems() {
 
-            let response = axios.get("http://localhost:3001/api/v1/items/byshop/" + id)
+            let response = "";
+            if(location.state == null){
+                response = axios.get("http://localhost:3001/api/v1/items/byshop/" + sessionStorage.getItem("shop"))
+            }
+            else{
+                response = axios.get("http://localhost:3001/api/v1/items/byshop/" + location.state.shop_ID)
+            }
+
+            //let response = axios.get("http://localhost:3001/api/v1/items/byshop/" + location.state.shop_ID)
             response = await response;
             setItems(response.data);
             // if(items.length > 0){
             //     setValid(true);
             // }
 
-            console.log("Items for Store " + id + " fetched");
+            console.log("Items for Store " + location.state.shop_ID + " fetched");
             console.log(response);
         }
         getItems();
@@ -102,7 +122,7 @@ const ShopPage = (props) => {
             image:image
         }
 
-        let response = await axios.put("http://localhost:3001/api/v1/shops/" + id , newData);
+        let response = await axios.put("http://localhost:3001/api/v1/shops/" + location.state.shop_ID , newData);
 
         console.log(response)
 

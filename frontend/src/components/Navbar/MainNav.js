@@ -26,8 +26,10 @@ const MainNav = (props) => {
     }
 
     const handleSearchSubmit = () => {
-        navigate("/search/"+query);
-        window.location.reload(false);
+        //navigate("/search/"+query);
+        localStorage.setItem("search",query);
+        navigate("/search/"+query, {state:{string:query}});
+        //window.location.reload(false);
     }
 
     const handleUserShopNav = () => {
@@ -58,7 +60,7 @@ const MainNav = (props) => {
                     </CNavbarNav>
                     <CForm className="d-flex">
                         {/* <CFormInput onChange={handleSearchChange} type="search" className="me-2" placeholder="Search Any Item" width={2000} /> */}
-                        <input onChange={handleSearchChange} type='search bar' name="search" placeholder='Search Any Item'></input>
+                        <input onChange={handleSearchChange} type='search bar' placeholder='Search Any Item'></input>
                         <CButton onClick={handleSearchSubmit} type="submit" color="success" variant="outline" style={{marginRight:30}}>
                         Search
                         </CButton>
