@@ -4,8 +4,9 @@ import {Navigate} from 'react-router';
 import { Link } from 'react-router-dom';
 import { CForm, CFormLabel, CFormInput, CCol, CButton, CRow, CContainer, CTabContent } from '@coreui/react';
 import jwt_decode from 'jwt-decode';
-import {login} from '.../redux/actions/'
-import {useDispatch} from 'react-redux';
+import { login } from '../../redux/actions';
+import { connect } from "react-redux";
+
 
 class Login extends Component {
 
@@ -65,6 +66,7 @@ class Login extends Component {
                     this.setState({
                         auth: true
                     })
+                    this.props.login()
 
                     axios.get("http://localhost:3001/api/v1/shops/usershop/"+data.username)
                     .then(response => {
@@ -121,4 +123,7 @@ class Login extends Component {
     }
 }
 
-export default Login;
+//connect()(Login)
+
+//export default connect()(Login);
+export default connect(null, { login })(Login)
