@@ -51,7 +51,7 @@ const ShopPage = (props) => {
             //     setUserShop(true);
             // }
 
-            console.log("Shop ID: " + location.state.shop_ID)
+            //console.log("Shop ID: " + location.state.shop_ID)
         }
 
         getResponse();
@@ -117,12 +117,12 @@ const ShopPage = (props) => {
     const updateImage = async e => {
 
         const newData = {
-            name:name,
-            total_sales:total_sales,
+            // name:name,
+            // total_sales:total_sales,
             image:image
         }
 
-        let response = await axios.put("http://localhost:3001/api/v1/shops/" + location.state.shop_ID , newData);
+        let response = await axios.put("http://localhost:3001/api/v1/shops/shopimage/" + sessionStorage.getItem("shop"), newData);
 
         console.log(response)
 

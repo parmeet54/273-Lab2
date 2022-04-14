@@ -19,13 +19,11 @@ const ShopSchema = new Schema ({
         required: true
     },
     total_sales:{
-        type: Number,
-        default:0
-    },
+        type: Number
+        },
     image:{
-        type: String,
-        default:"/default-shop.jpeg"
-    }
+        type: String
+        }
 });
 
 const ShopModel = mongoose.model('shop', ShopSchema);
