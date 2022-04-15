@@ -4,6 +4,7 @@ import { CCard, CCardImage, CCardBody, CCardTitle, CCardText, CButton } from '@c
 import ItemEditPopup from './ItemEditPopup';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
 
 
 function Item(props) {
@@ -12,6 +13,7 @@ function Item(props) {
     const[fav,setFav]= useState(false);
     const navigate = useNavigate();
     const[unFav, setUnfav] = useState("");
+    const currency = useSelector(state=> state.CURRENCY);
  
     useEffect( () => {
         //props.item.fav = props.item.fav;
@@ -82,7 +84,7 @@ function Item(props) {
 
                 <br/>
                 <CCardText>Stock:{props.item.quantity > 0 ? props.item.quantity : "Out of Stock"}</CCardText>          
-                <CCardText>{localStorage.getItem("currency")}{props.item.price}</CCardText>
+                <CCardText>{currency}{props.item.price}</CCardText>
                 
                 {/* <CButton color='light' onClick={onNavigateItemPage} href="/item">Item Page</CButton> */}
                 <br/>

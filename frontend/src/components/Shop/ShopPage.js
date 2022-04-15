@@ -6,7 +6,9 @@ import ItemList from '../Item/ItemList';
 import { useParams } from 'react-router';
 import ItemPopup from './ItemPopup';
 import { CContainer,CCol,CRow, CButton } from '@coreui/react';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
+
 
 const ShopPage = (props) => {
     const[name, setName] = useState("");
@@ -21,11 +23,17 @@ const ShopPage = (props) => {
     const [shop,setShop] = useState("");
     //const {id} = useParams();
     const location = useLocation();
+    const logged = useSelector(state => state.LOGGED);
+    const navigate = useNavigate();
 
     // To handle the image input
     const hiddenFileInput = React.useRef(null);
 
     useEffect(() => {
+
+        if(logged == false){
+            navigate('/login')
+        }
 
         async function getResponse(){
             let response = ""

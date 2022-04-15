@@ -2,9 +2,10 @@ import React , {useEffect, useState} from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import { Navigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 import FavItems from './FavItems';
 import { CContainer, CRow, CCol, CButton } from '@coreui/react';
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
     const[username, setUsername] = useState("");
@@ -15,9 +16,16 @@ const Profile = () => {
     const[favItems,setFavItems] = useState([]);
     const userShop = sessionStorage.getItem("shop")
     const[hasShop, setHasShop] = useState(false);
+    const logged = useSelector(state => state.LOGGED);
+    const navigate = useNavigate();
  
 
     useEffect(() => {
+
+        if(logged == false){
+            navigate('/login')
+        }
+
         axios.get("http://localhost:3001/api/v1/users/" + sessionStorage.getItem("token"))
         .then((response) => {
             setUser(response.data);

@@ -4,10 +4,19 @@ import { Link } from 'react-router-dom';
 import Item from '../Item/Item';
 import ItemList from '../Item/ItemList';
 import { CContainer, CRow, CFooter } from '@coreui/react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { changeCountry, changeCurrency } from '../../redux/actions';
 
 const Homepage = () => {
 
-    const[items, setItems] = useState([])
+    const[items, setItems] = useState([]);
+    const logged = useSelector(state => state.LOGGED);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const reduxCurrency = useSelector(state=> state.CURRENCY);
+    const reduxCountry = useSelector(state=> state.COUNTRY);
+
 
     //const userShop = sessionStorage.getItem("shop");
 
@@ -15,6 +24,11 @@ const Homepage = () => {
     const[country,setCountry] = useState(localStorage.getItem("country"));
   
     useEffect(() => {
+
+        if(logged == false){
+            navigate('/login')
+        }
+    
         async function getItems() {
 
             let shop = axios.get("http://localhost:3001/api/v1/shops/usershop/"+sessionStorage.getItem("token"));
@@ -30,10 +44,12 @@ const Homepage = () => {
 
     const handleCurrencyChange = (e) => {
         setCurrency(e.target.value);
+        dispatch(changeCurrency(e.target.value));
         localStorage.setItem("currency" , e.target.value);
     }
 
     const handleCountryChange = (e) => {
+        dispatch(changeCountry(e.target.value));
         localStorage.setItem("country" , e.target.value);
     }
 
@@ -62,7 +78,7 @@ const Homepage = () => {
             </div>
             <div>
                 Select Country: 
-                <select value={country} onChange={handleCountryChange}>
+                <select value={reduxCountry} onChange={handleCountryChange}>
                     <option value="japan">Japan</option>
                     <option value="United Kingdom">United Kingdom</option>
                     <option value="United Kingdom">Europe</option>
@@ -73,7 +89,7 @@ const Homepage = () => {
             
             <div>
                 <span>Select Currency</span>
-                <select value={currency} onChange={handleCurrencyChange}>
+                <select value={reduxCurrency} onChange={handleCurrencyChange}>
                     <option value="₹">Rupee (₹)</option>
                     <option value="£">Pound (£)</option>
                     <option value="¥">Euro (€)</option>

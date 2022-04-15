@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router';
 import { useParams } from 'react-router';
 import { CContainer, CRow, CCol, CButton } from '@coreui/react';
+import { useSelector } from 'react-redux';
 
 const ItemPage = (props) => {
 
@@ -15,6 +16,7 @@ const ItemPage = (props) => {
     //const {id} = useParams();
     const navigate = useNavigate();
     let[counter, setCounter] = useState(1);
+    const currency = useSelector(state=> state.CURRENCY);
 
 
     useEffect(() => {
@@ -175,7 +177,7 @@ const ItemPage = (props) => {
                     Description: <b>{item.description}</b>
 
                     <br /><br />
-                    Price <b>{localStorage.getItem("currency") + item.price}</b>
+                    Price <b>{currency + item.price}</b>
 
                     <br /><br />
                     Stock: <b>{item.quantity > 0 ? item.quantity : "Out of Stock"}</b>
@@ -193,7 +195,7 @@ const ItemPage = (props) => {
 
                     {item.quantity > 0      ?
                     
-                        <CButton onClick={handleAddToCart} color='success' variant='outline' >Add to Cart: {localStorage.getItem("currency")}{item.price*counter}</CButton>
+                        <CButton onClick={handleAddToCart} color='success' variant='outline' >Add to Cart: {currency}{item.price*counter}</CButton>
 
                     :
                     

@@ -2,12 +2,15 @@ import React , {useEffect, useState} from 'react';
 import axios from 'axios';
 import { CTable, CTableHead, CTableRow,CTableHeaderCell, CTableBody, CTableDataCell, CButton } from '@coreui/react';
 import { useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
 
 const Cart = () => {
     const[cartItems,setCartItems] = useState([]);
     const[total, setTotal] = useState(0);
     const navigate = useNavigate();
     const[hasItems, setHasItems] = useState(false);
+    const currency = useSelector(state=> state.CURRENCY);
+
 
     useEffect(() => {
         // axios.get("http://localhost:3001/api/v1/cart/byuser/" + sessionStorage.getItem("token"))
@@ -161,7 +164,7 @@ const Cart = () => {
                                 <CTableHeaderCell align={'middle'} scope="row"><img src={image} width={100} /></CTableHeaderCell>
                                 <CTableDataCell align={'middle'}>{name}</CTableDataCell>
                                 <CTableDataCell align={'middle'}>{quantity}</CTableDataCell>
-                                <CTableDataCell align={'middle'}>{localStorage.getItem("currency")}{price}</CTableDataCell>
+                                <CTableDataCell align={'middle'}>{currency}{price}</CTableDataCell>
                             </CTableRow>
                         ))}
 
@@ -170,7 +173,7 @@ const Cart = () => {
                             <CTableDataCell></CTableDataCell>
                             <CTableDataCell></CTableDataCell>
                             <CTableDataCell></CTableDataCell>
-                            <CTableDataCell><h2>Total: {localStorage.getItem("currency")}{total}</h2></CTableDataCell>
+                            <CTableDataCell><h2>Total: {currency}{total}</h2></CTableDataCell>
                         </CTableRow>
 
 

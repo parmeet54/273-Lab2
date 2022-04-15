@@ -9,7 +9,7 @@ import { CNavbar, CContainer, CNavbarBrand, CCollapse, CNavbarNav, CNavItem, CNa
 import axios from 'axios';
 
 import { logout } from '../../redux/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const MainNav = (props) => {
 
@@ -18,8 +18,14 @@ const MainNav = (props) => {
     const[isLogged, setLoggedIn] = useState(false);
     const dispatch = useDispatch();
 
+    const logged = useSelector(state => state.LOGGED);
+
     useEffect(()=> {
-        if(sessionStorage.getItem("token")!= null){
+        // if(sessionStorage.getItem("token")!= null){
+        //     setLoggedIn(true);
+        // }
+
+        if(logged == true){
             setLoggedIn(true);
         }
     },[]);
