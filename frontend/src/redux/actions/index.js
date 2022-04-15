@@ -1,6 +1,6 @@
 import 
 { LOGIN, LOGOUT, CHANGE_CURRENCY, CHANGE_COUNTRY,  ADD_TO_CART, 
-REMOVE_FROM_CART, INCREMENT_CART_ITEM, DECREMENT_CART_ITEM } 
+REMOVE_FROM_CART, INCREMENT_CART_ITEM, DECREMENT_CART_ITEM, DELETE_CART, ADD_GIFT } 
 from "../constants/action-types"
 
 // Login Action
@@ -61,6 +61,21 @@ export const incrementItem = (data) => {
 export const decrementItem = (data) => {
     return{
         type:DECREMENT_CART_ITEM,
+        payload:data
+    }
+}
+
+// Delete Cart
+export const deleteCart = () => {
+    return{
+        type:DELETE_CART
+    }
+}
+
+// Add Gift
+export const addGift = (data) => {
+    return{
+        type:ADD_GIFT,
         payload:data
     }
 }

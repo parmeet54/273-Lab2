@@ -4,7 +4,8 @@ import { Button } from 'react-bootstrap';
 import { useNavigate, useLocation } from 'react-router';
 import { useParams } from 'react-router';
 import { CContainer, CRow, CCol, CButton } from '@coreui/react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { addToCart } from '../../redux/actions';
 
 const ItemPage = (props) => {
 
@@ -15,9 +16,9 @@ const ItemPage = (props) => {
     const location = useLocation();
     //const {id} = useParams();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     let[counter, setCounter] = useState(1);
     const currency = useSelector(state=> state.CURRENCY);
-
 
     useEffect(() => {
 
@@ -106,7 +107,7 @@ const ItemPage = (props) => {
 
 
         const cartData = {
-            cart_item_ID:item.item_ID,
+            item_ID:item.item_ID,
             image:item.image,
             name:item.name,
             shop:item.shopname,
@@ -116,12 +117,14 @@ const ItemPage = (props) => {
             username:sessionStorage.getItem("token")
         }
 
-        axios.post("http://localhost:3001/api/v1/cart/" , cartData)
-        .then(response => {
-            console.log(response);
-            console.log("Item Added to cart");
-            console.log(cartData);
-        })
+        dispatch(addToCart(cartData));
+
+        // axios.post("http://localhost:3001/api/v1/cart/" , cartData)
+        // .then(response => {
+        //     console.log(response);
+        //     console.log("Item Added to cart");
+        //     console.log(cartData);
+        // })
 
 
         // handleQuantityChange()
@@ -199,7 +202,7 @@ const ItemPage = (props) => {
 
                     :
                     
-                    ""}
+                    "Please wait till more stock is added"}
                     
                 </CCol>
             </CRow>

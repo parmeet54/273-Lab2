@@ -8,7 +8,7 @@ import { CNavbar, CContainer, CNavbarBrand, CCollapse, CNavbarNav, CNavItem, CNa
     CDropdown, CDropdownToggle, CDropdownItem, CDropdownMenu, CDropdownDivider, CForm, CFormInput, CButton } from '@coreui/react/';
 import axios from 'axios';
 
-import { logout } from '../../redux/actions';
+import { logout, deleteCart } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 const MainNav = (props) => {
@@ -28,7 +28,7 @@ const MainNav = (props) => {
         if(logged == true){
             setLoggedIn(true);
         }
-    },[]);
+    },[logged]);
 
     const handleSearchChange = (e) => {
         setQuery(e.target.value)
@@ -49,6 +49,7 @@ const MainNav = (props) => {
 
     const handleLogout = () => {
         setLoggedIn(false);
+        dispatch(deleteCart())
         dispatch(logout());
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("shop");

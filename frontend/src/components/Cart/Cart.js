@@ -2,48 +2,33 @@ import React , {useEffect, useState} from 'react';
 import axios from 'axios';
 import { CTable, CTableHead, CTableRow,CTableHeaderCell, CTableBody, CTableDataCell, CButton } from '@coreui/react';
 import { useNavigate } from 'react-router';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeFromCart ,incrementItem, decrementItem, deleteCart, addGift } from '../../redux/actions';
+
 
 const Cart = () => {
-    const[cartItems,setCartItems] = useState([]);
+    //const[cartItems,setCartItems] = useState([]);
     const[total, setTotal] = useState(0);
     const navigate = useNavigate();
     const[hasItems, setHasItems] = useState(false);
+    const logged = useSelector(state=> state.LOGGED);
     const currency = useSelector(state=> state.CURRENCY);
-
+    const cartItems = useSelector(state => state.CART.items)
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        // axios.get("http://localhost:3001/api/v1/cart/byuser/" + sessionStorage.getItem("token"))
-        //     .then((response) => {
-        //         if(response.data === 200){
-        //             const items = response.data
-        //             setCartItems(response.data);
-        //             console.log(response.data)
-        //             console.log(response.data)
-        //             setHasItems(true);
-        //             setTotal(items.reduce((a, v) => a + v.price, 0).toFixed(2));
-        //         }
-            
-            //cartItems.map(item  => total+item.price);
-            //});
-        // cartItems.map(item  => total+item.price);
 
-        async function getCart(){
-            let response = await axios.get("http://localhost:3001/api/v1/cart/byuser/" + sessionStorage.getItem("token"))
-            response = await response;
-    
-            setCartItems(response.data)
-            // await response.data.map(item => total = total + item.price);
-            setTotal(response.data.reduce((a, v) => a + v.price, 0).toFixed(2));
-            // await response.data.map(item => setTotal(total+item.price));
-
-            console.log(total)
+        if(logged == false){
+            navigate('/login')
         }
-        
-        getCart()
+
+        if(cartItems){
+            setHasItems(true)
+            setTotal(cartItems.reduce((a, v) => a + v.price, 0).toFixed(2));
+        }
 
 
-    },[]);
+    },[cartItems]);
 
     const handleCheckout = () => {
         
@@ -85,16 +70,18 @@ const Cart = () => {
                 console.log(response);
             })
 
-
-
             // CREATE Total Order
         })
 
-        axios.delete("http://localhost:3001/api/v1/cart/" + sessionStorage.getItem("token"))
+        //axios.delete("http://localhost:3001/api/v1/cart/" + sessionStorage.getItem("token"))
 
         navigate("/orders");
     }
 
+    const handleDeleteCart = () => {
+        setHasItems(false);
+        dispatch(deleteCart());
+    }
 
     console.log("\n Inside Cart Page")
 
@@ -145,10 +132,10 @@ const Cart = () => {
             </CTableBody>
 
             </CTable> */}
-            {/* {hasItems && cartItems.length > 0?  */}
+             {hasItems?  
             
                 <><CTable>
-                    <CTableHead color="light">
+                    <CTableHead color="dark">
                         <CTableRow>
                             <CTableHeaderCell scope="col">Image</CTableHeaderCell>
                             <CTableHeaderCell scope="col">Item Name</CTableHeaderCell>
@@ -169,7 +156,7 @@ const Cart = () => {
                         ))}
 
 
-                        <CTableRow>
+                        <CTableRow color="dark">
                             <CTableDataCell></CTableDataCell>
                             <CTableDataCell></CTableDataCell>
                             <CTableDataCell></CTableDataCell>
@@ -180,12 +167,14 @@ const Cart = () => {
 
                     </CTableBody>
 
-                </CTable><br /><br /><br /><br /><CButton size="lg" variant="outline" color='success' onClick={handleCheckout}>Checkout</CButton></>
+                </CTable><br /><br /><br /><br />
+                
+                <CButton size="lg" variant="outline" color='success' onClick={handleCheckout}>Checkout</CButton></>
             
-                {/* :
+                 :
 
                     <><br /><br /><br /><br /><h2>No Items in your cart</h2></>
-            } */}
+            } 
 
             
 
