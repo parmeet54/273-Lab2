@@ -1,9 +1,11 @@
 import React , {useEffect, useState} from 'react';
 import axios from 'axios';
-import { CTable, CTableHead, CTableRow,CTableHeaderCell, CTableBody, CTableDataCell, CButton } from '@coreui/react';
+import { CTable, CTableHead, CTableRow,CTableHeaderCell, CTableBody, 
+    CTableDataCell, CButton, CFormCheck, CDropdown, CDropdownToggle, 
+    CDropdownItem, CDropdownMenu, CFormSelect } from '@coreui/react';
 import { useNavigate } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeFromCart ,incrementItem, decrementItem, deleteCart, addGift } from '../../redux/actions';
+import { removeFromCart , modifyQuantity, emptyCart, addGift } from '../../redux/actions';
 
 
 const Cart = () => {
@@ -24,11 +26,13 @@ const Cart = () => {
 
         if(cartItems){
             setHasItems(true)
-            setTotal(cartItems.reduce((a, v) => a + v.price, 0).toFixed(2));
+            setTotal(cartItems.reduce((a, v) => a + v.totalPrice, 0).toFixed(2));
         }
 
 
     },[cartItems]);
+
+
 
     const handleCheckout = () => {
         
@@ -80,9 +84,42 @@ const Cart = () => {
 
     const handleDeleteCart = () => {
         setHasItems(false);
-        dispatch(deleteCart());
+        dispatch(emptyCart());
     }
 
+    const createSelectItems= (stock) => {
+        let items = [];         
+        for (let i = 0; i <= stock; i++) {             
+             items.push(<option key={i} value={i}>{i}</option>);   
+             //here I will be creating my options dynamically based on
+             //what props are currently passed to the parent component
+        }
+        return items;
+    }
+
+    const handleQuantityAdjust = (item_ID, quantity) => {
+
+        if(quantity == 0){
+            console.log("Removing Item")
+            dispatch(removeFromCart(item_ID))
+        }
+        else{
+            console.log("Changing Quantity for",item_ID)
+            const data = {
+                id: item_ID,
+                quantity:quantity
+            }
+            dispatch(modifyQuantity(data));    
+            console.log("HERE") 
+        }
+           
+    }
+
+
+    const handleRemoveItem = (item_ID) => {
+        dispatch(removeFromCart(item_ID))
+    }
+    
     console.log("\n Inside Cart Page")
 
     return(
@@ -140,23 +177,35 @@ const Cart = () => {
                             <CTableHeaderCell scope="col">Image</CTableHeaderCell>
                             <CTableHeaderCell scope="col">Item Name</CTableHeaderCell>
                             <CTableHeaderCell scope="col">Quantity</CTableHeaderCell>
+                            <CTableHeaderCell scope="col">Add Gift</CTableHeaderCell>
                             <CTableHeaderCell scope="col">Price</CTableHeaderCell>
                         </CTableRow>
                     </CTableHead>
+
                     <CTableBody>
 
-                        {cartItems.map(({ image, name, quantity, price }) => (
+                        {cartItems.map(({ item_ID, image, name, quantity, totalPrice, stock }) => (
 
-                            <CTableRow>
+                            <CTableRow>     
                                 <CTableHeaderCell align={'middle'} scope="row"><img src={image} width={100} /></CTableHeaderCell>
-                                <CTableDataCell align={'middle'}>{name}</CTableDataCell>
-                                <CTableDataCell align={'middle'}>{quantity}</CTableDataCell>
-                                <CTableDataCell align={'middle'}>{currency}{price}</CTableDataCell>
+                                <CTableDataCell align={'middle'}><b>{name}</b></CTableDataCell>
+                                <CTableDataCell style={{width:80}}  align={'middle'}>
+
+                                    <CFormSelect value={quantity} onChange={(e) => handleQuantityAdjust(item_ID, e.target.value)}>
+                                        {createSelectItems(stock)}
+                                    </CFormSelect>
+
+                                </CTableDataCell>
+
+                                <CTableDataCell style={{width:300}}  align={'middle'}>
+                                    <CFormCheck id="flexCheckDefault"/>
+                                </CTableDataCell>
+                                <CTableDataCell align={'middle'}>{currency}{totalPrice}</CTableDataCell>
                             </CTableRow>
                         ))}
 
-
                         <CTableRow color="dark">
+                            <CTableDataCell></CTableDataCell>
                             <CTableDataCell></CTableDataCell>
                             <CTableDataCell></CTableDataCell>
                             <CTableDataCell></CTableDataCell>

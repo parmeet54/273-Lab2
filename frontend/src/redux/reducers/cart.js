@@ -1,24 +1,36 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, INCREMENT_CART_ITEM, 
-    DECREMENT_CART_ITEM, DELETE_CART, ADD_GIFT } from "../constants/action-types"
+import { ADD_TO_CART, REMOVE_FROM_CART, 
+    MODIFY_QUANTITY, DELETE_CART, ADD_GIFT } from "../constants/action-types"
 
 const cartReducer = (state = {items:[]}, action) => {
 
     switch(action.type){
 
         case ADD_TO_CART: 
-            return { // returning a copy of orignal state 
-                ...state, //spreading the original state
-                items: [action.payload, ...state.items] // new todos array
+            return { 
+                ...state,
+                items: [action.payload, ...state.items]
             }
 
         case REMOVE_FROM_CART: 
-            return state = []
 
-        case INCREMENT_CART_ITEM: 
-            return state = []
+            console.log(action.payload.id)
+            return state = {
+                ...state,
+                items: state.items.filter(item => item.item_ID !== action.payload.id) 
+            }
 
-        case DECREMENT_CART_ITEM: 
-            return state = []
+        case MODIFY_QUANTITY: {
+
+                const index = state.items.findIndex(item => item.item_ID == action.payload.id) //finding index of the item
+                const newArray = [...state.items]; //making a new array
+                newArray[index].quantity = parseInt(action.payload.quantity, 10)//changing value in the new array
+                newArray[index].totalPrice = newArray[index].price * action.payload.quantity//changing value in the new array
+
+                return { 
+                    ...state, //copying the orignal state
+                    items: newArray, //reassingning items to new array
+                }
+           }
 
         case DELETE_CART: 
             return {

@@ -113,7 +113,8 @@ const ItemPage = (props) => {
             shop:item.shopname,
             quantity:counter,
             stock:item.quantity,
-            price:item.price*counter,
+            price:item.price,
+            totalPrice:item.price*counter,
             username:sessionStorage.getItem("token")
         }
 

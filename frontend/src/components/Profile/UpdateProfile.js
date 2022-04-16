@@ -142,7 +142,7 @@ const UpdateProfile = () => {
                                 <CFormInput  value={address} onChange={(e) => setAddress(e.target.value)} type='text' name="address" placeholder='Full Address'></CFormInput>
                                 <br/>
                                 <CFormLabel>Country:</CFormLabel>
-                                <CFormSelect value={country} onChange={(e) => setCountry(e.target.value)}  id="country" name="country" placeholder='Select Country'>
+                                <CFormSelect value={"Pick a Country"} onChange={(e) => setCountry(e.target.value)}  id="country" name="country" placeholder='Select Country'>
                                     <option value="Afganistan">Afghanistan</option>
                                     <option value="Albania">Albania</option>
                                     <option value="Algeria">Algeria</option>

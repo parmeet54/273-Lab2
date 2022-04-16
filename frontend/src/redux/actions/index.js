@@ -1,6 +1,6 @@
 import 
 { LOGIN, LOGOUT, CHANGE_CURRENCY, CHANGE_COUNTRY,  ADD_TO_CART, 
-REMOVE_FROM_CART, INCREMENT_CART_ITEM, DECREMENT_CART_ITEM, DELETE_CART, ADD_GIFT } 
+REMOVE_FROM_CART, MODIFY_QUANTITY, DELETE_CART, ADD_GIFT } 
 from "../constants/action-types"
 
 // Login Action
@@ -42,31 +42,26 @@ export const addToCart = (data) => {
 }
 
 // Remove from Cart
-export const removeFromCart = (data) => {
+export const removeFromCart = (item_ID) => {
     return{
         type:REMOVE_FROM_CART,
-        payload:data
+        payload:{id: item_ID}
     }
 }
 
 // Increment Cart Item
-export const incrementItem = (data) => {
+export const modifyQuantity = (data) => {
     return{
-        type:INCREMENT_CART_ITEM,
-        payload:data
-    }
-}
-
-// Decrement Cart Item
-export const decrementItem = (data) => {
-    return{
-        type:DECREMENT_CART_ITEM,
-        payload:data
+        type:MODIFY_QUANTITY,
+        payload:{
+            id: data.id,
+            quantity: data.quantity
+        }
     }
 }
 
 // Delete Cart
-export const deleteCart = () => {
+export const emptyCart = () => {
     return{
         type:DELETE_CART
     }
@@ -76,6 +71,10 @@ export const deleteCart = () => {
 export const addGift = (data) => {
     return{
         type:ADD_GIFT,
-        payload:data
+        payload:{
+            id:data.id,
+            gift : data.gift,
+            gift_desc: data.gift_desc
+        }
     }
 }
