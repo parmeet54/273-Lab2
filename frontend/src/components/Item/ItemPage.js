@@ -110,12 +110,11 @@ const ItemPage = (props) => {
             item_ID:item.item_ID,
             image:item.image,
             name:item.name,
-            shop:item.shopname,
+            shop:shopName,
             quantity:counter,
             stock:item.quantity,
             price:item.price,
-            totalPrice:item.price*counter,
-            username:sessionStorage.getItem("token")
+            totalPrice:item.price*counter
         }
 
         dispatch(addToCart(cartData));

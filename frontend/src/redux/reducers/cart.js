@@ -21,14 +21,14 @@ const cartReducer = (state = {items:[]}, action) => {
 
         case MODIFY_QUANTITY: {
 
-                const index = state.items.findIndex(item => item.item_ID == action.payload.id) //finding index of the item
-                const newArray = [...state.items]; //making a new array
-                newArray[index].quantity = parseInt(action.payload.quantity, 10)//changing value in the new array
-                newArray[index].totalPrice = (Number(newArray[index].price) * Number(action.payload.quantity)).toFixed(2)//changing value in the new array
+                const index = state.items.findIndex(item => item.item_ID == action.payload.id);
+                const newArray = [...state.items]; 
+                newArray[index].quantity = parseInt(action.payload.quantity, 10);
+                newArray[index].totalPrice = (Number(newArray[index].price) * Number(action.payload.quantity)).toFixed(2);
                 newArray[index].totalPrice = Number(newArray[index].totalPrice);
                 return { 
-                    ...state, //copying the orignal state
-                    items: newArray, //reassingning items to new array
+                    ...state,
+                    items: newArray,
                 }
            }
 
@@ -37,8 +37,17 @@ const cartReducer = (state = {items:[]}, action) => {
                 items:[]
             }
 
-        case ADD_GIFT:
-            return state = []
+        case ADD_GIFT:{
+            const index = state.items.findIndex(item => item.item_ID == action.payload.id)
+            const newArray = [...state.items];
+            newArray[index].gift = action.payload.gift  
+            newArray[index].gift_desc = action.payload.gift_desc
+            return { 
+                ...state,
+                items: newArray,
+            }
+        }
+
 
         default: 
             return state;

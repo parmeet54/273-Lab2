@@ -40,48 +40,38 @@ const Cart = () => {
 
     const handleCheckout = () => {
         
-        const theRandomNumber = Math.floor(Math.random() * 99999999) + 1;
         const today = new Date().toString();
+        let randomID = Math.floor(Math.random() * 99999) + 1;
 
         cartItems.map(item => {
 
-            
-
-            let randomID = Math.floor(Math.random() * 99999) + 1;
-
-            const data = {
-                order_item_ID:randomID,
-                order_ID:theRandomNumber,
-                image:item.image,
-                name:item.name,
-                shop:item.shop,
-                quantity:item.quantity,
-                price:item.price,
-                date_purc:today,
-                total:total,
-                username:sessionStorage.getItem("token")
-            }
-
-            axios.post("http://localhost:3001/api/v1/orders/" , data)
-            .then(response => {
-                console.log(response);
-            })
-
-
+            // Fix Item Stocks
             let quantity = {
-                quantity:item.stock - data.quantity
+                quantity:item.stock - item.quantity
             }
 
-            axios.put("http://localhost:3001/api/v1/items/stock/"+item.cart_item_ID , quantity)
+            axios.put("http://localhost:3001/api/v1/items/stock/"+item.item_ID , quantity)
             .then(response => {
                 console.log("Stock Fixed")
                 console.log(response);
             })
-
-            // CREATE Total Order
         })
 
-        //axios.delete("http://localhost:3001/api/v1/cart/" + sessionStorage.getItem("token"))
+        // New ORDER
+        const orderData = {
+            order_ID:randomID,
+            username:sessionStorage.getItem("token"),
+            items:cartItems,
+            date_purc:today,
+            total:total
+        }
+
+        // Make Axios POST call
+        // axios.put("http://localhost:3001/api/v1/opders/", quantity)
+        // .then(response => {
+        //     console.log("Order Created")
+        //     console.log(response);
+        // })
 
         navigate("/orders");
     }
