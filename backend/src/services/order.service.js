@@ -7,27 +7,6 @@ exports.createOrder = async (orderReqData, result) => {
     const order_ID = orderReqData.order_ID;
     const username = orderReqData.username;
     const items = orderReqData.items;
-
-    const itemsA = [
-        {
-            item_ID:3,
-            name:"item 3",
-            quantity:2,
-            price:100.99,
-            image:"/default-item.png",
-            shop:"New Shop"
-        },
-        {
-            item_ID:4,
-            name:"item 4",
-            quantity:1,
-            price:22.99,
-            image:"/default-item.png",
-            shop:"New Shop 2"
-        }
-    ]
-
-
     const date_purc = orderReqData.date_purc;
     const total = orderReqData.total;
 

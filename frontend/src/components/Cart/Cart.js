@@ -67,13 +67,15 @@ const Cart = () => {
         }
 
         // Make Axios POST call
-        // axios.put("http://localhost:3001/api/v1/opders/", quantity)
-        // .then(response => {
-        //     console.log("Order Created")
-        //     console.log(response);
-        // })
+        axios.post("http://localhost:3001/api/v1/orders/", orderData)
+        .then(response => {
+            console.log("Order Created")
+            console.log(response);
+            dispatch(emptyCart());
+        })
 
-        navigate("/orders");
+        //navigate("/orders");
+
     }
 
     const handleDeleteCart = () => {
