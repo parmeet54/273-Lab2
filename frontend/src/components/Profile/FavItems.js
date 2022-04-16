@@ -94,7 +94,7 @@ const FavItems = (props) => {
 
             <CForm className="d-flex justify-content-center">
                 <h2>Favorite Items: </h2><input onChange={handleSearchChange} type='search bar' name="search" placeholder='Search Favorite Item(s)' style={{ marginLeft: 200 }}></input>
-                <CButton onClick={handleSearchSubmit} type="submit" color="success" variant="outline" style={{ marginRight: 50 }}>
+                <CButton onClick={() => handleSearchSubmit} type="submit" color="success" variant="outline" style={{ marginRight: 50 }}>
                     Search
                 </CButton>
             </CForm>

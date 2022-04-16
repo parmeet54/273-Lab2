@@ -17,9 +17,9 @@ import axios from 'axios';
 class Main extends Component {
 
     render(){
-        if(sessionStorage.getItem("currency") == null){
-            sessionStorage.setItem("currency", "$")
-        }
+        // if(sessionStorage.getItem("currency") == null){
+        //     sessionStorage.setItem("currency", "$")
+        // }
         return(
             <><div>
                 <MainNav />

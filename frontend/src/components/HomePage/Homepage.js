@@ -47,7 +47,7 @@ const Homepage = () => {
         dispatch(changeCurrency(e.target.value));
         localStorage.setItem("currency" , e.target.value);
     }
-
+    
     const handleCountryChange = (e) => {
         dispatch(changeCountry(e.target.value));
         localStorage.setItem("country" , e.target.value);

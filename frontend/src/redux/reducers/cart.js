@@ -24,8 +24,8 @@ const cartReducer = (state = {items:[]}, action) => {
                 const index = state.items.findIndex(item => item.item_ID == action.payload.id) //finding index of the item
                 const newArray = [...state.items]; //making a new array
                 newArray[index].quantity = parseInt(action.payload.quantity, 10)//changing value in the new array
-                newArray[index].totalPrice = newArray[index].price * action.payload.quantity//changing value in the new array
-
+                newArray[index].totalPrice = (Number(newArray[index].price) * Number(action.payload.quantity)).toFixed(2)//changing value in the new array
+                newArray[index].totalPrice = Number(newArray[index].totalPrice);
                 return { 
                     ...state, //copying the orignal state
                     items: newArray, //reassingning items to new array
