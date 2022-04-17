@@ -40,7 +40,13 @@ const Cart = () => {
 
     const handleCheckout = () => {
         
-        const today = new Date().toString();
+        let today = new Date();
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        const yyyy = today.getFullYear();
+
+        today = mm + '/' + dd + '/' + yyyy;
+
         let randomID = Math.floor(Math.random() * 99999) + 1;
 
         cartItems.map(item => {
@@ -74,14 +80,15 @@ const Cart = () => {
             dispatch(emptyCart());
         })
 
-        //navigate("/orders");
+        navigate("/orders");
 
     }
 
     const handleDeleteCart = () => {
         setHasItems(false);
-        dispatch(emptyCart());
         navigate("/")
+        dispatch(emptyCart());
+
     }
     
     return(

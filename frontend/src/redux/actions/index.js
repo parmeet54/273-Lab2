@@ -1,6 +1,6 @@
 import 
 { LOGIN, LOGOUT, CHANGE_CURRENCY, CHANGE_COUNTRY,  ADD_TO_CART, 
-REMOVE_FROM_CART, MODIFY_QUANTITY, DELETE_CART, ADD_GIFT } 
+REMOVE_FROM_CART, MODIFY_QUANTITY, DELETE_CART, ADD_GIFT, ADJUST_ORDERS_PER_PAGE } 
 from "../constants/action-types"
 
 // Login Action
@@ -76,5 +76,13 @@ export const addGift = (data) => {
             gift : data.gift,
             gift_desc: data.gift_desc
         }
+    }
+}
+
+// Adjust Orders Per Page
+export const adjustOrdersPerPage = (data) => {
+    return{
+        type: ADJUST_ORDERS_PER_PAGE,
+        payload:data
     }
 }
