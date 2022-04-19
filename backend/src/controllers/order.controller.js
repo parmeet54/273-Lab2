@@ -1,12 +1,13 @@
-const OrderService = require('../services/order.service');
-
+// Kafka
+var kafka = require('../../kafka/client');
 
 // Create an Order
+// TOPIC: create_order
 exports.createOrder = (req,res) => {
     console.log("\nCREATE ORDER");
 
     const orderData = req.body;
-    OrderService.createOrder(orderData, (err, result) => {
+    kafka.make_request('create_order', "params", orderData, (err, result) => {
         if(err){
             console.log(err);
             res.send(err);
@@ -22,10 +23,11 @@ exports.createOrder = (req,res) => {
 
 
 // Get All Order Items
+// TOPIC: get_all_orders
 exports.getAllOrders = (req,res) => {
     console.log("\nGET ALL ORDER");
 
-    OrderService.getAllOrders((err, result) => {
+    kafka.make_request('get_all_orders', "params" , "body", (err, result) => {
         if(err){
             res.send(err);
         }
@@ -38,10 +40,11 @@ exports.getAllOrders = (req,res) => {
 
 
 // Get ORDER ITEMS by Username
+// TOPIC: get_orders_by_user
 exports.getOrdersByUsername = (req, res) => {
     console.log("Inside ORDER Controller: Get ORDER");
 
-    OrderService.getOrdersByUsername(req.params.username  ,(err, result) => {
+    kafka.make_request('get_orders_by_user', req.params.username, "body"  ,(err, result) => {
         if(err){
             console.log(err);
             res.send(err);
