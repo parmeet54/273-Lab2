@@ -1,5 +1,3 @@
-const ShopService = require('../services/shop.service');
-
 // Kafka
 var kafka = require('../../kafka/client');
 
