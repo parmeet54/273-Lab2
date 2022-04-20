@@ -48,7 +48,7 @@ function handleTopicRequest(topic_name,fname){
 
 // connect to mongodb cluster
 mongoose
-  .connect(process.env.MONGO_CONNECTION_URI,  { useNewUrlParser: true })
+  .connect(process.env.MONGO_CONNECTION_URI,  { maxPoolSize:500, useNewUrlParser: true })
   .then(() => {
       console.log("Mongo Connected Successfully");
   })
