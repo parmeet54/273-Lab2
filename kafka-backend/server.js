@@ -82,7 +82,7 @@ handleTopicRequest("update_user", UserService.updateProfile);                // 
 
 // ORDER REQUESTS
 handleTopicRequest("create_order", OrderService.createOrder);                // Create Order
-handleTopicRequest("get_all_orders", OrderService.getAllOrders);             // create item
+handleTopicRequest("get_all_orders", OrderService.getAllOrders);             // Get All orders
 handleTopicRequest("get_orders_by_user", OrderService.getOrdersByUsername);  // Get user orders
 
 
