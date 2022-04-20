@@ -23,6 +23,7 @@ npm install
 npm start
 ```
 
+<br/>
 2. Run REST API Backend
 
 - Change Directory into backend folder
@@ -40,9 +41,10 @@ npm install
 ```
 nodemon index.js
 ```
+<br/>
 
 
-1. Run React Frontend App
+3. Run React Frontend App
 
 - Change Directory into frontend folder
 
