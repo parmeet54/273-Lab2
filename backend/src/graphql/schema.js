@@ -7,14 +7,18 @@ const {
   GraphQLList,
 } = require("graphql");
 
+const mongoose = require("mongoose");
+const ItemModel = require("../models/item.model");
+
 // All The query requests
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
     getAllItems: {
       type: new GraphQLList(ItemType),
-      resolve(parent, args) {
-        return items;
+      async resolve(parent, args) {
+        return await ItemModel.find();
+        // return allItems;
       },
     },
   },

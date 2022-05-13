@@ -96,7 +96,7 @@ app.use("/api/v1/orders", orderRoutes);
 // ------------  GRAPHQL SETUP  -------------//
 
 app.use(
-  "/graphql",
+  "/api/graphql",
   graphqlHTTP({
     schema,
     graphiql: true,
