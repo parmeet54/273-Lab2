@@ -1,12 +1,10 @@
-// Kafka
-var kafka = require('../../kafka/client');
+const ItemService = require('../services/item.service')
 
 // Get All Items
-// TOPIC: get_all_items
 exports.getAllItems = (req,res) => {
     console.log("\nGET ALL ITEMS");
 
-        kafka.make_request('get_all_items', "params" , "body" ,(err, result) => {
+    ItemService.getAllItems((err, result) => {
         if(err){
             res.send(err);
         }
@@ -19,13 +17,11 @@ exports.getAllItems = (req,res) => {
 
 
 // Create a Item
-// TOPIC: create_item
 exports.createItem = (req,res) => {
     console.log("\nCREATE ITEM");
 
     const itemData = req.body;
-    kafka.make_request('create_item', "params" ,itemData,(err, result) => {
-
+    ItemService.createItem(itemData, (err, result) => {
         if(err){
             console.log(err);
             res.send(err);
@@ -41,11 +37,10 @@ exports.createItem = (req,res) => {
 
 
 // Get ITEM by ITEM_ID
-// TOPIC: get_item_by_id
 exports.getItemByID = (req, res) => {
     console.log("Inside ITEM Controller: Get ITEM");
 
-    kafka.make_request('get_item_by_id', req.params.item_ID , "body",(err, result) => {
+    ItemService.getItemByID(req.params.item_ID ,(err, result) => {
         if(err){
             console.log(err);
             res.send(err);
@@ -64,11 +59,10 @@ exports.getItemByID = (req, res) => {
 
 
 // Get ITEM by SHOP_ID
-// TOPIC: get_item_by_shopid
 exports.getItemByShopID = (req, res) => {
     console.log("Inside ITEM Controller: Get ITEM by SHOP");
 
-    kafka.make_request('get_item_by_shopid', req.params.shop , "body",(err, result) => {
+    ItemService.getItemByShopID(req.params.shop ,(err, result) => {
         if(err){
             console.log(err);
             res.status(200).send(err);
@@ -87,11 +81,10 @@ exports.getItemByShopID = (req, res) => {
 
 
 // Get ITEM by NAME
-// TOPIC: get_item_by_name
 exports.getItemByName = (req, res) => {
     console.log("Inside ITEM Controller: Get ITEM by NAME");
 
-    kafka.make_request('get_item_by_name', req.params.name, "body" ,(err, result) => {
+    ItemService.getItemByName(req.params.name ,(err, result) => {
         if(err){
             console.log(err);
             res.send(err);
@@ -112,12 +105,11 @@ exports.getItemByName = (req, res) => {
 
 
 // Update ITEM
-// TOPIC: update_item
 exports.updateItem = (req, res) => {
     console.log("Inside Item Controller: Update Item");
 
     const itemData = req.body;
-    kafka.make_request('update_item', req.params.item_ID, itemData , (err, result) => {
+    ItemService.updateItem(req.params.item_ID, itemData , (err, result) => {
         if(err){
             console.log(err);
             res.send(err);
@@ -132,11 +124,10 @@ exports.updateItem = (req, res) => {
 
 
 // Update Item Quantity
-// TOPIC: update_item_quantity
 exports.updateItemQuantity = (req, res) => {
 
     const itemData = req.body;
-    kafka.make_request('update_item_quantity', req.params.item_ID, itemData, (err,result) => {
+    ItemService.updateItemQuantity(req.params.item_ID, itemData, (err,result) => {
         if(err)
         res.send(err);
 
@@ -148,11 +139,10 @@ exports.updateItemQuantity = (req, res) => {
 
 
 // Favorite/Unfav Item
-// TOPIC: update_item_fav
 exports.updateItemFav = (req, res) => {
 
     const itemData = req.body;
-    kafka.make_request('update_item_fav', req.params.item_ID, itemData, (err,result) => {
+    ItemService.updateItemFav(req.params.item_ID, itemData, (err,result) => {
         if(err)
         res.send(err);
 
@@ -164,9 +154,8 @@ exports.updateItemFav = (req, res) => {
 
 
 // delete Item by ID
-// TOPIC: delete_item
 exports.deleteItem = (req, res) => {
-    kafka.make_request('delete_item', req.params.item_ID, "body" , (err, result) =>{
+    ItemService.deleteItem(req.params.item_ID, (err, result) =>{
         if(err)
         res.send(err);
 

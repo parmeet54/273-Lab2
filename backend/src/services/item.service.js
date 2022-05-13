@@ -1,10 +1,8 @@
 const ItemModel = require('../models/item.model');
 
 // Get All Item
-exports.getAllItems = async (params, body, result) => {
-
+exports.getAllItems = async (result) => {
     try{
-
         const items = await ItemModel.find();
         result(null, items);
     }
@@ -15,7 +13,7 @@ exports.getAllItems = async (params, body, result) => {
 
 
 // Create Item
-exports.createItem = async (params, itemReqData, result) => {
+exports.createItem = async (itemReqData, result) => {
 
     const item_ID = itemReqData.item_ID;
     const name = itemReqData.name;
@@ -42,8 +40,7 @@ exports.createItem = async (params, itemReqData, result) => {
 
 
 // Get Item By Item_ID
-exports.getItemByID = async (item_ID, body, result) => {
-
+exports.getItemByID = async (item_ID, result) => {
     try{
         const item = await ItemModel.findOne({item_ID:item_ID});
 
@@ -56,7 +53,7 @@ exports.getItemByID = async (item_ID, body, result) => {
 
 
 // Get Item By Shop
-exports.getItemByShopID = async (shop, body , result) => {
+exports.getItemByShopID = async (shop, result) => {
     try{
         const item = await ItemModel.find({shop:shop});
 
@@ -70,7 +67,7 @@ exports.getItemByShopID = async (shop, body , result) => {
 
 
 // Get Item By Name (Search)
-exports.getItemByName = async (name, body, result) => {
+exports.getItemByName = async (name, result) => {
     try{
         const items = await ItemModel.find({'name': {'$regex': name, '$options': 'i'}});
 
@@ -148,7 +145,7 @@ exports.updateItemFav = async (item_ID, itemReqData, result) => {
 
 
 // Delete Item
-exports.deleteItem = async (item_ID, body, result) => {
+exports.deleteItem = async (item_ID, result) => {
     try{
         await ItemModel.deleteOne({item_ID});
          

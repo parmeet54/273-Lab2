@@ -2,7 +2,7 @@ const OrderModel = require('../models/order.model')
 
 
 // Create Order
-exports.createOrder = async (params, orderReqData, result) => {
+exports.createOrder = async (orderReqData, result) => {
 
     const order_ID = orderReqData.order_ID;
     const username = orderReqData.username;
@@ -23,7 +23,7 @@ exports.createOrder = async (params, orderReqData, result) => {
 
 
 // Get All Orders
-exports.getAllOrders = async (params, body, result) => {
+exports.getAllOrders = async (result) => {
     try{
         const orders = await OrderModel.find();
         result(null, orders);
@@ -35,7 +35,7 @@ exports.getAllOrders = async (params, body, result) => {
 
 
 // Get Order By Username
-exports.getOrdersByUsername = async (username, body, result) => {
+exports.getOrdersByUsername = async (username, result) => {
     try{
         const orders = await OrderModel.find({username:username});
 
