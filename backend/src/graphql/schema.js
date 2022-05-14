@@ -1,26 +1,38 @@
-const { ItemType, items } = require("./TypeDefs/ItemType");
-const {
-  GraphQLObjectType,
-  GraphQLSchema,
-  GraphQLInt,
-  GraphQLString,
-  GraphQLList,
-} = require("graphql");
+const { GraphQLObjectType, GraphQLSchema } = require("graphql");
 
-const mongoose = require("mongoose");
-const ItemModel = require("../models/item.model");
+// import Item Queries and Mutations
+const {
+  getAllItems,
+  getItemById,
+  getItemsByShop,
+} = require("./Queries/item.queries");
+
+const {
+  createItem,
+  updateItem,
+  updateItemQuantity,
+  deleteItem,
+} = require("./Mutations/item.mutations");
+
+// import Shop Queries and Mutations
+
+// import Order Queries and Mutations
+const { getAllOrders, getOrdersByUser } = require("./Queries/order.queries");
 
 // All The query requests
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
-    getAllItems: {
-      type: new GraphQLList(ItemType),
-      async resolve(parent, args) {
-        return await ItemModel.find();
-        // return allItems;
-      },
-    },
+    // Items
+    getAllItems: getAllItems,
+    getItemById: getItemById,
+    getItemsByShop: getItemsByShop,
+
+    // Shops
+
+    // Orders
+    getAllOrders: getAllOrders,
+    getOrdersByUser: getOrdersByUser,
   },
 });
 
@@ -28,17 +40,13 @@ const RootQuery = new GraphQLObjectType({
 const Mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: {
-    createItem: {
-      type: ItemType,
-      args: {
-        name: { type: GraphQLString },
-      },
-      resolve(oarent, args) {
-        var theRandomNumber = Math.floor(Math.random() * 99999) + 1;
-        items.push({ item_ID: theRandomNumber, name: args.name });
-        return args;
-      },
-    },
+    // Items
+    createItem: createItem,
+    updateItem: updateItem,
+    updateItemQuantity: updateItemQuantity,
+    deleteItem: deleteItem,
+
+    // Shops
   },
 });
 
