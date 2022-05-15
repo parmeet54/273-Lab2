@@ -6,8 +6,6 @@ const {
   GraphQLList,
 } = require("graphql");
 
-const ItemModel = require("../../models/item.model");
-
 // Child Type for Order Items
 const OrderedItemType = new GraphQLObjectType({
   name: "order_item",

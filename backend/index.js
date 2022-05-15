@@ -53,11 +53,25 @@ app.use(function (req, res, next) {
 });
 
 // API Map Routing
+const userRoutes = require("./src/routes/user.route");
+const shopRoutes = require("./src/routes/shop.route");
+const itemRoutes = require("./src/routes/item.route");
 const orderRoutes = require("./src/routes/order.route");
 
 // Auth Routes
 const authRoutes = require("./src/routes/auth.route");
 app.use("/api/v1/auth/", authRoutes);
+
+// Getting routes
+
+// User Routes
+app.use("/api/v1/users", userRoutes);
+
+// Shop Routes
+app.use("/api/v1/shops", shopRoutes);
+
+// Item Routes
+app.use("/api/v1/items", itemRoutes);
 
 // Order Routes
 app.use("/api/v1/orders", orderRoutes);

@@ -1,6 +1,6 @@
 const { GraphQLObjectType, GraphQLSchema } = require("graphql");
 
-// import Item Queries and Mutations
+// Import Item Queries and Mutations
 const {
   getAllItems,
   getItemById,
@@ -14,10 +14,15 @@ const {
   deleteItem,
 } = require("./Mutations/item.mutations");
 
-// import Shop Queries and Mutations
+// Import Shop Queries and Mutations
 
-// import Order Queries and Mutations
+// Import Order Queries and Mutations
 const { getAllOrders, getOrdersByUser } = require("./Queries/order.queries");
+
+// Import User Queries and Mutations
+const { getAllUsers, getUser } = require("./Queries/user.queries");
+
+const { updateUser } = require("./Mutations/user.mutations");
 
 // All The query requests
 const RootQuery = new GraphQLObjectType({
@@ -33,6 +38,10 @@ const RootQuery = new GraphQLObjectType({
     // Orders
     getAllOrders: getAllOrders,
     getOrdersByUser: getOrdersByUser,
+
+    // Users
+    getAllUsers: getAllUsers,
+    getUser: getUser,
   },
 });
 
@@ -47,6 +56,11 @@ const Mutation = new GraphQLObjectType({
     deleteItem: deleteItem,
 
     // Shops
+
+    // Orders
+
+    // Users
+    updateUser: updateUser,
   },
 });
 

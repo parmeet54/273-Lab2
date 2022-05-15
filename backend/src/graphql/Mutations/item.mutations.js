@@ -69,24 +69,17 @@ exports.updateItem = {
     quantity: { type: GraphQLInt },
   },
   async resolve(parent, args) {
-    const name = args.name;
-    const category = args.category;
-    const description = args.description;
-    const image = args.image;
-    const price = args.price;
-    const quantity = args.quantity;
-
     try {
       await ItemModel.findOneAndUpdate(
         { item_ID: args.item_ID },
         {
           $set: {
-            name: name,
-            image: image,
-            category: category,
-            description: description,
-            price: price,
-            quantity: quantity,
+            name: args.name,
+            image: args.image,
+            category: args.category,
+            description: args.description,
+            price: args.price,
+            quantity: args.quantity,
           },
         },
         { returnOriginal: false }
