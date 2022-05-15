@@ -15,6 +15,18 @@ const {
 } = require("./Mutations/item.mutations");
 
 // Import Shop Queries and Mutations
+const {
+  getAllShops,
+  getShopByID,
+  getShopByUser,
+} = require("./Queries/shop.queries");
+
+const {
+  createShop,
+  updateShop,
+  updateShopImage,
+  updateShopSales,
+} = require("./Mutations/shop.mutations");
 
 // Import Order Queries and Mutations
 const { getAllOrders, getOrdersByUser } = require("./Queries/order.queries");
@@ -34,6 +46,9 @@ const RootQuery = new GraphQLObjectType({
     getItemsByShop: getItemsByShop,
 
     // Shops
+    getAllShops: getAllShops,
+    getShopByID: getShopByID,
+    getShopByUser: getShopByUser,
 
     // Orders
     getAllOrders: getAllOrders,
@@ -56,6 +71,10 @@ const Mutation = new GraphQLObjectType({
     deleteItem: deleteItem,
 
     // Shops
+    createShop: createShop,
+    updateShop: updateShop,
+    updateShopImage: updateShopImage,
+    updateShopSales: updateShopSales,
 
     // Orders
 
