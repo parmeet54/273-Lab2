@@ -31,6 +31,8 @@ const {
 // Import Order Queries and Mutations
 const { getAllOrders, getOrdersByUser } = require("./Queries/order.queries");
 
+const { createOrder } = require("./Mutations/order.mutations");
+
 // Import User Queries and Mutations
 const { getAllUsers, getUser } = require("./Queries/user.queries");
 
@@ -77,6 +79,7 @@ const Mutation = new GraphQLObjectType({
     updateShopSales: updateShopSales,
 
     // Orders
+    createOrder: createOrder,
 
     // Users
     updateUser: updateUser,

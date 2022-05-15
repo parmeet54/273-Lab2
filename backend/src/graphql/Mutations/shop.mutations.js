@@ -1,4 +1,4 @@
-const { GraphQLInt, GraphQLList, GraphQLString } = require("graphql");
+const { GraphQLInt, GraphQLString } = require("graphql");
 
 // Import Shop Type
 const ShopType = require("../TypeDefs/ShopType");
