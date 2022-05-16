@@ -50,34 +50,6 @@ const ItemPage = (props) => {
     }
   });
 
-  // const handleFavorite = () => {
-
-  //     const data = {
-  //         fav:"1"
-  //     }
-  //     ;
-  //     axios.put("http://localhost:3001/api/v1/items/fav/"+ item.item_ID, data)
-  //     .then(response => {
-  //         setFav(true);
-  //     })
-  //     console.log("Item Favorited")
-  //     window.location.reload(false);
-  // }
-
-  // const handleUnFav = () => {
-
-  //     const data = {
-  //         fav:"0"
-  //     }
-
-  //     axios.put("http://localhost:3001/api/v1/items/fav/"+ item.item_ID, data)
-  //     .then(response => {
-  //         setFav(false);
-  //     })
-  //     console.log("Item UnFavorited")
-  //     window.location.reload(false);
-  // }
-
   const onNavigateShopPage = () => {
     navigate("/shop/" + item.shop, { state: { shop_ID: item.shop } });
   };

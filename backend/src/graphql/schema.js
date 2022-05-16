@@ -36,7 +36,7 @@ const { createOrder } = require("./Mutations/order.mutations");
 // Import User Queries and Mutations
 const { getAllUsers, getUser } = require("./Queries/user.queries");
 
-const { updateUser } = require("./Mutations/user.mutations");
+const { updateUser, createUser } = require("./Mutations/user.mutations");
 
 // All The query requests
 const RootQuery = new GraphQLObjectType({
@@ -83,6 +83,7 @@ const Mutation = new GraphQLObjectType({
 
     // Users
     updateUser: updateUser,
+    createUser: createUser,
   },
 });
 

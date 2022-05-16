@@ -6,6 +6,39 @@ const UserType = require("../TypeDefs/UserType");
 // Mongoose Models
 const UserModel = require("../../models/user.model");
 
+// Create User
+exports.createUser = {
+  type: UserType,
+  args: {
+    name: { type: GraphQLString },
+    username: { type: GraphQLString },
+    email: { type: GraphQLString },
+    password: { type: GraphQLString },
+    image: { type: GraphQLString },
+  },
+  async resolve(parent, args) {
+    const name = args.name;
+    const username = args.username;
+    const email = args.email;
+    const password = args.password;
+    const image = args.image;
+
+    try {
+      await UserModel.create({
+        name,
+        username,
+        email,
+        password,
+        image,
+      });
+      return args;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  },
+};
+
 // Update User
 exports.updateUser = {
   type: UserType,
