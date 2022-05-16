@@ -6,7 +6,7 @@ const changeCurrencyReducer = (state = "" , action) => {
         case CHANGE_CURRENCY: 
             return state = action.payload;
         default: 
-            return state;
+            return state = "$";
     }
 }
 

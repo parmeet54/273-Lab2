@@ -42,7 +42,7 @@ const ItemSchema = new Schema ({
     },
     image:{
         type: String,
-        default:"/default-item.png"
+        default:"/default-item.jpeg"
     }
 
 });

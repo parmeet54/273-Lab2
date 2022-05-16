@@ -1,7 +1,7 @@
 const ShopModel = require('../models/shop.model');
 
 // Get All Shops
-exports.getAllShops = async (params, body, result) => {
+exports.getAllShops = async (result) => {
     try{
         const shops = await ShopModel.find();
         result(null, shops);
@@ -13,7 +13,7 @@ exports.getAllShops = async (params, body, result) => {
 
 
 // Create Shop
-exports.createShop = async (params, shopReqData, result) => {
+exports.createShop = async (shopReqData, result) => {
 
     const shop_ID = shopReqData.shop_ID;
     const name = shopReqData.name;
@@ -34,7 +34,7 @@ exports.createShop = async (params, shopReqData, result) => {
 
 
 // Get Shop By Shop_ID
-exports.getShopByID = async (shop_ID, body, result) => {
+exports.getShopByID = async (shop_ID, result) => {
     try{
         const shop = await ShopModel.findOne({shop_ID:shop_ID});
 
@@ -48,7 +48,7 @@ exports.getShopByID = async (shop_ID, body, result) => {
 
 
 // Get Shop By username
-exports.getShopByUser = async (username, body, result) => {
+exports.getShopByUser = async (username, result) => {
     try{
         const shop = await ShopModel.findOne({username:username});
 
