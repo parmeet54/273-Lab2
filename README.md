@@ -2,8 +2,6 @@
 
 ## Etsy Clone by Parmeet Singh
 
-### Recording: https://www.youtube.com/watch?v=Uq9pHpTNxpQ
-
 ### Steps to run the application:
 
 
